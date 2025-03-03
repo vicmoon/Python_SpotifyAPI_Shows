@@ -1,5 +1,5 @@
 body {
-  background-color: #000b58;
+  background-color: #4b164c;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
   color: aliceblue;
@@ -53,8 +53,11 @@ a {
   color: brown;
 }
 
-option {
+select {
   padding: 15px;
   background-color: #4d55cc;
   border-radius: 40px;
+  color: white; /* Ensure text is visible */
+  border: none;
+  outline: none;
 }

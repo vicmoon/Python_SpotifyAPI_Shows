@@ -10,9 +10,11 @@
     <title>Results</title>
   </head>
   <body class="results">
-    <main> 
+    <h2>🎙️ Podcasts and Resources in ENG, DE, IT, RO 🎙️</h2>
+    <a href="{{ url_for('home') }}">Back</a>
+    <main>
       <div class="filter-section">
-        <h3>Filter by language/market:</h3>
+        <h3>Filter by language:</h3>
         <select id="marketFilter" onchange="filterPodcasts()">
           <option value="all">All Markets</option>
           {% for market in markets %}
@@ -21,35 +23,40 @@
         </select>
       </div>
 
-      <h2>🎙️ Podcasts and Resources in ENG, DE, IT, RO 🎙️</h2>
-      <a href="{{url_for("home")}}">Back </a>
-      <ul>
-        {% for podcast in podcasts %}
-        <li>
-          🎤 {{podcast.id}}. {{ podcast.name }}:
-          <a href="{{ podcast.url }}" target="_blank">On Spotify</a>
-        </li>
-        {% endfor %}
-      </ul>
-      <a href="{{url_for("home")}}">Back </a>
+      {% for podcast in podcasts %}
+      <div class="podcast-item" data-market="{{ podcast.market }}">
+        <ul>
+          <li>
+            🎤 {{ podcast.name }}:
+            <a href="{{ podcast.url }}" target="_blank">On Spotify</a>
+          </li>
+        </ul>
+      </div>
+      {% endfor %}
+
+      <a href="{{ url_for('home') }}">Back</a>
+
       {% if error %}
-  
-  {% endif %} 
-</main>
-<script>
-function filterPodcasts() {
-  const selectedMarket = document.getElementById('marketFilter').value;
-  const podcastItems = document.querySelectorAll('.podcast-item');
-  
-  podcastItems.forEach(item => {
-    if (selectedMarket === 'all' || item.getAttribute('data-market') === selectedMarket) {
-      item.style.display = 'block';
-    } else {
-      item.style.display = 'none';
-    }
-  });
-}
-</script>
-   
+      <p class="error-message">{{ error }}</p>
+      {% endif %}
+    </main>
+
+    <script>
+      function filterPodcasts() {
+        const selectedMarket = document.getElementById('marketFilter').value;
+        const podcastItems = document.querySelectorAll('.podcast-item');
+
+        podcastItems.forEach((item) => {
+          if (
+            selectedMarket === 'all' ||
+            item.getAttribute('data-market') === selectedMarket
+          ) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      }
+    </script>
   </body>
 </html>

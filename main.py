@@ -1,12 +1,15 @@
 import requests
 from flask import Flask, render_template, request
-# import my_creds 
+import my_creds 
 import os
 
 app = Flask(__name__)
 
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+# CLIENT_ID = os.getenv("CLIENT_ID")
+# CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+
+CLIENT_ID = my_creds.CLIENT_ID
+CLIENT_SECRET = my_creds.CLIENT_SECRET
 
 
 # Get a Spotify API token
@@ -66,7 +69,7 @@ def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
         else:
             print(f"Error fetching podcasts for language {market}: {response.status_code}, {response.text}")
 
-    return all_podcasts
+    return all_podcasts, markets
 
 
 
@@ -110,9 +113,19 @@ def get_podcasts():
         # Log token failure
         print("Failed to get Spotify token")
         return render_template("podcasts.html", podcasts=[], error="Authentication failed")
-    
+
     markets = ["US", "IT", "DE", "RO"]
-    podcasts, _ = search_podcasts_by_language(query, markets) if query else ([], markets)
+    
+    if query:
+        result = search_podcasts_by_language(query, markets)
+        if isinstance(result, tuple) and len(result) == 2:
+            podcasts, _ = result
+        else:
+                # If function doesn't return markets as expected
+            podcasts = result
+    else:
+        podcasts = []
+
     print(f"Found {len(podcasts)} podcasts")
     
     return render_template("podcasts.html", podcasts=podcasts, markets=markets)
