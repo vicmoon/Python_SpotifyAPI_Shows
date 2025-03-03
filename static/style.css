@@ -1,5 +1,5 @@
 body {
-  background-color: #4b164c;
+  background-color: #5c7285;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
   color: aliceblue;
@@ -50,14 +50,14 @@ button:hover {
 }
 
 a {
-  color: brown;
+  color: #efb036;
 }
 
 select {
   padding: 15px;
-  background-color: #4d55cc;
+  background-color: #efb036;
   border-radius: 40px;
-  color: white; /* Ensure text is visible */
+  color: black; /* Ensure text is visible */
   border: none;
   outline: none;
 }
