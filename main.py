@@ -64,7 +64,7 @@ def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
             ]
             all_podcasts.extend(podcasts)
         else:
-            print(f"Error fetching podcasts for language {lang}: {response.status_code}, {response.text}")
+            print(f"Error fetching podcasts for language {market}: {response.status_code}, {response.text}")
 
     return all_podcasts
 
