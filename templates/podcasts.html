@@ -7,17 +7,20 @@
       href="{{ url_for('static', filename='style.css') }}"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Podcasts</title>
+    <title>Results</title>
   </head>
   <body class="results">
-    <h1>🎙️ Podcasts in ENG, DE, IT, RO</h1>
+    
+    <h2>🎙️ Podcasts and Resources in ENG, DE, IT, RO 🎙️</h2>
+    <a href="{{url_for("home")}}">Back </a>
     <ul>
       {% for podcast in podcasts %}
       <li>
-        {{ podcast.name }}:
+        🎤 {{ podcast.name }}:
         <a href="{{ podcast.url }}" target="_blank">Check it</a>
       </li>
       {% endfor %}
     </ul>
+    <a href="{{url_for("home")}}">Back </a>
   </body>
 </html>

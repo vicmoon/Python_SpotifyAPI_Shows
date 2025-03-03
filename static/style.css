@@ -1,9 +1,18 @@
 body {
-  background-color: #7a73d1;
+  background-color: #000b58;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 20px;
   color: aliceblue;
   text-align: center;
+}
+
+.index_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
 }
 
 select {
@@ -14,6 +23,7 @@ select {
 li {
   list-style: none;
   text-align: left;
+  max-width: 800px;
 }
 
 .results {
@@ -23,13 +33,13 @@ li {
 }
 
 input {
-  padding: 20px;
+  padding: 15px;
   border-radius: 20px;
   width: 200px;
 }
 
 button {
-  padding: 20px;
+  padding: 15px;
   background-color: aqua;
   border-radius: 40px;
 }
@@ -37,4 +47,8 @@ button {
 button:hover {
   background-color: chartreuse;
   transform: scale(1.1);
+}
+
+a {
+  color: brown;
 }
