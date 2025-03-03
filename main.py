@@ -39,7 +39,7 @@ def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
         params = {
             "q": query,
             "type": "show",
-            "limit": 60,  # Reducing from 100 to be safer
+            "limit": 50,  # Reducing from 100 to be safer
             "market": market
         }
 
