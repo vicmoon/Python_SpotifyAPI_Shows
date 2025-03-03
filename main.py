@@ -36,7 +36,7 @@ def search_podcasts_by_language(query, languages=["en", "it", "de", "ro"]):
         params = {
             "q": query,
             "type": "show",  # "show" = Podcasts in Spotify API
-            "limit": 50, 
+            "limit": 100, 
             "market": lang  # This sets the language filter
         }
 
