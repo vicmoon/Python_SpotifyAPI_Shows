@@ -111,11 +111,11 @@ def get_podcasts():
         print("Failed to get Spotify token")
         return render_template("podcasts.html", podcasts=[], error="Authentication failed")
     
-    print(f"Searching for: {query} with token: {token[:5]}...")  # Print just first few chars of token
-    podcasts = search_podcasts_by_language(query) if query else []
+    markets = ["US", "IT", "DE", "RO"]
+    podcasts, _ = search_podcasts_by_language(query, markets) if query else ([], markets)
     print(f"Found {len(podcasts)} podcasts")
     
-    return render_template("podcasts.html", podcasts=podcasts)
+    return render_template("podcasts.html", podcasts=podcasts, markets=markets)
 
 
 

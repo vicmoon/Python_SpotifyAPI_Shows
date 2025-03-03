@@ -52,3 +52,9 @@ button:hover {
 a {
   color: brown;
 }
+
+option {
+  padding: 15px;
+  background-color: #4d55cc;
+  border-radius: 40px;
+}
