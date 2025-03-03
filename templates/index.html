@@ -7,10 +7,10 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
-    <title>Document</title>
+    <title>Podcasts</title>
   </head>
   <body>
-    <h1>Hello</h1>
+    <h1>Search for a category/topic</h1>
 
     <form action="{{ url_for('get_podcasts') }}" method="GET">
       <input type="text" name="query" placeholder="Enter podcast topic" />

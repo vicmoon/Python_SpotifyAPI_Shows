@@ -2,13 +2,14 @@ import requests
 from flask import Flask, render_template, request
 import my_creds 
 
+
 app = Flask(__name__)
 
 CLIENT_ID = my_creds.CLIENT_ID
 CLIENT_SECRET = my_creds.CLIENT_SECRET 
 
 
-# Function to get a fresh Spotify API token
+# Get a Spotify API token
 def get_spotify_token():
     auth_url = "https://accounts.spotify.com/api/token"
     
@@ -21,11 +22,13 @@ def get_spotify_token():
     if auth_response.status_code != 200:
         print("Error getting token:", auth_response.text)
         return None
+    
+    token = auth_response.json()["access_token"]
+   
+    return token
 
-    return auth_response.json()["access_token"]
 
-
-# Function to search for podcasts by keyword
+# Search for podcasts by keyword
 def search_podcasts_by_language(query, languages=["en", "it", "de", "ro"]):
     all_podcasts = []
 
@@ -95,7 +98,7 @@ def home():
 
 @app.route("/podcasts", methods=["GET"])
 def get_podcasts():
-    query = request.args.get("query")  # Get the search keyword from the user
+    query = request.args.get("query")  
     podcasts = search_podcasts_by_language(query) if query else []
 
     return render_template("podcasts.html", podcasts=podcasts)

@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Podcasts</title>
   </head>
-  <body>
+  <body class="results">
     <h1>🎙️ Podcasts in ENG, DE, IT, RO</h1>
     <ul>
       {% for podcast in podcasts %}
       <li>
-        {{ podcast.name }} -
-        <a href="{{ podcast.url }}" target="_blank">{{ podcast.name }}</a>
+        {{ podcast.name }}:
+        <a href="{{ podcast.url }}" target="_blank">Check it</a>
       </li>
       {% endfor %}
     </ul>
