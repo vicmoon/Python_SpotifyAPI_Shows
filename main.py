@@ -32,7 +32,7 @@ def get_spotify_token():
 
 
 # Search for podcasts by keyword
-def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO", "RUS"]):
+def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
     all_podcasts = []
 
     for market in markets:
