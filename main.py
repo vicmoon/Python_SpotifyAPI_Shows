@@ -39,7 +39,7 @@ def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
         params = {
             "q": query,
             "type": "show",
-            "limit": 50,  # Reducing from 100 to be safer
+            "limit": 60,  # Reducing from 100 to be safer
             "market": market
         }
 
@@ -56,7 +56,7 @@ def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
                 {
                     "name": show["name"],
                     "url": show["external_urls"]["spotify"],
-                    "language": lang,
+                    "market": market,
                     "id": show["id"]
 
                 }
@@ -117,7 +117,7 @@ def get_podcasts():
     
     return render_template("podcasts.html", podcasts=podcasts)
 
-    
+
 
 
 @app.route("/episodes/<show_id>")

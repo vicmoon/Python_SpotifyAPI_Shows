@@ -22,5 +22,10 @@
       {% endfor %}
     </ul>
     <a href="{{url_for("home")}}">Back </a>
+    {% if error %}
+<div class="error-message">
+  <p>{{ error }}</p>
+</div>
+{% endif %}
   </body>
 </html>
