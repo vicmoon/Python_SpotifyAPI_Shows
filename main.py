@@ -13,31 +13,34 @@ CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 def get_spotify_token():
     auth_url = "https://accounts.spotify.com/api/token"
     
-    auth_response = requests.post(auth_url, {
-        "grant_type": "client_credentials",
-        "client_id": CLIENT_ID,
-        "client_secret": CLIENT_SECRET
-    })
-    
-    if auth_response.status_code != 200:
-        print("Error getting token:", auth_response.text)
+    try:
+        auth_response = requests.post(auth_url, {
+            "grant_type": "client_credentials",
+            "client_id": CLIENT_ID,
+            "client_secret": CLIENT_SECRET
+        }, timeout=10)  # Add timeout
+        
+        if auth_response.status_code != 200:
+            print(f"Error getting token: {auth_response.status_code}, {auth_response.text}")
+            return None
+        
+        token = auth_response.json()["access_token"]
+        return token
+    except Exception as e:
+        print(f"Exception in get_spotify_token: {str(e)}")
         return None
-    
-    token = auth_response.json()["access_token"]
-   
-    return token
 
 
 # Search for podcasts by keyword
-def search_podcasts_by_language(query, languages=["en", "it", "de", "ro"]):
+def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
     all_podcasts = []
 
-    for lang in languages:
+    for market in markets:
         params = {
             "q": query,
-            "type": "show",  # "show" = Podcasts in Spotify API
-            "limit": 100, 
-            "market": lang  # This sets the language filter
+            "type": "show",
+            "limit": 50,  # Reducing from 100 to be safer
+            "market": market
         }
 
         headers = {
@@ -53,7 +56,9 @@ def search_podcasts_by_language(query, languages=["en", "it", "de", "ro"]):
                 {
                     "name": show["name"],
                     "url": show["external_urls"]["spotify"],
-                    "language": lang
+                    "language": lang,
+                    "id": show["id"]
+
                 }
                 for show in data["shows"]["items"]
             ]
@@ -98,10 +103,21 @@ def home():
 
 @app.route("/podcasts", methods=["GET"])
 def get_podcasts():
-    query = request.args.get("query")  
+    query = request.args.get("query")
+    token = get_spotify_token()
+    
+    if not token:
+        # Log token failure
+        print("Failed to get Spotify token")
+        return render_template("podcasts.html", podcasts=[], error="Authentication failed")
+    
+    print(f"Searching for: {query} with token: {token[:5]}...")  # Print just first few chars of token
     podcasts = search_podcasts_by_language(query) if query else []
-
+    print(f"Found {len(podcasts)} podcasts")
+    
     return render_template("podcasts.html", podcasts=podcasts)
+
+    
 
 
 @app.route("/episodes/<show_id>")
