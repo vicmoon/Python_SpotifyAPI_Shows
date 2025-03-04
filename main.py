@@ -147,9 +147,9 @@ def get_episodes(show_id):
     page = request.args.get("page", 1, type=int)
     query = request.args.get("query")
 
-    # if not query:
-    #     # Redirect back to podcasts page if query is missing
-    #     return redirect(url_for("get_podcasts"))
+    if not query:
+        # Redirect back to podcasts page if query is missing
+        return redirect(url_for("get_podcasts"))
     
     episodes, has_next_page = get_podcast_episodes(show_id)
 
