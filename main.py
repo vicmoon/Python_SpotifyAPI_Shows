@@ -1,17 +1,19 @@
 import requests
 from flask import Flask, render_template, request
-import my_creds 
+# import my_creds 
 import os
 
 app = Flask(__name__)
 
-# CLIENT_ID = os.getenv("CLIENT_ID")
-# CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+EPISODES_PER_PAGE = 15
 
-CLIENT_ID = my_creds.CLIENT_ID
-CLIENT_SECRET = my_creds.CLIENT_SECRET
+# CLIENT_ID = my_creds.CLIENT_ID
+# CLIENT_SECRET = my_creds.CLIENT_SECRET
 
-EPISODES_PER_PAGE = 10
+
+
 
 # Get a Spotify API token
 def get_spotify_token():
