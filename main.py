@@ -1,16 +1,17 @@
 import requests
 from flask import Flask, render_template, request
-# import my_creds 
+import my_creds 
 import os
 
 app = Flask(__name__)
 
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+# CLIENT_ID = os.getenv("CLIENT_ID")
+# CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 
-# CLIENT_ID = my_creds.CLIENT_ID
-# CLIENT_SECRET = my_creds.CLIENT_SECRET
+CLIENT_ID = my_creds.CLIENT_ID
+CLIENT_SECRET = my_creds.CLIENT_SECRET
 
+EPISODES_PER_PAGE = 10
 
 # Get a Spotify API token
 def get_spotify_token():
@@ -75,7 +76,11 @@ def search_podcasts_by_language(query, markets=["US", "IT", "DE", "RO"]):
 
 # Function to get episodes for a podcast
 def get_podcast_episodes(show_id):
-    episodes_url = f"https://api.spotify.com/v1/shows/{show_id}/episodes"
+    page = request.args.get("page", 1, type=int)  # Get page number
+    limit = 10  # Number of episodes per page
+    offset = (page - 1) * limit  # Calculate offset
+
+    episodes_url = f"https://api.spotify.com/v1/shows/{show_id}/episodes?limit={limit}&offset={offset}"
 
     headers = {
         "Authorization": f"Bearer {get_spotify_token()}",
@@ -86,17 +91,18 @@ def get_podcast_episodes(show_id):
 
     if response.status_code != 200:
         print(f"Error fetching episodes: {response.status_code}, {response.text}")
-        return []
+        return [], False  # Return empty list and no pagination
 
     data = response.json()
 
-    # Extract episode details
     episodes = [
         {"name": episode["name"], "url": episode["external_urls"]["spotify"]}
-        for episode in data["items"]
+        for episode in data.get("items", [])
     ]
 
-    return episodes
+    has_next_page = data.get("next") is not None  # Check if more episodes exist
+
+    return episodes, has_next_page  # Return both episodes and pagination flag
 
 
 @app.route("/")
@@ -135,8 +141,23 @@ def get_podcasts():
 
 @app.route("/episodes/<show_id>")
 def get_episodes(show_id):
-    episodes = get_podcast_episodes(show_id)
-    return render_template("episodes.html", episodes=episodes)
+    page = request.args.get("page", 1, type=int)
+    query = request.args.get("query")
+
+    if not query:
+        # Redirect back to podcasts page if query is missing
+        return redirect(url_for("get_podcasts"))
+    
+    episodes, has_next_page = get_podcast_episodes(show_id)
+
+    return render_template(
+        "episodes.html",
+        episodes=episodes,
+        show_id=show_id,
+        page=page,
+        has_next_page=has_next_page,
+        query=query
+    )
 
 
 if __name__ == "__main__":

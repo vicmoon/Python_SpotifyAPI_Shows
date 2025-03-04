@@ -6,7 +6,8 @@ body {
   text-align: center;
 }
 
-.index_body {
+.index_body,
+.episodes_body {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,7 +24,7 @@ select {
 li {
   list-style: none;
   text-align: left;
-  max-width: 800px;
+  max-width: 900px;
 }
 
 .results {
@@ -60,4 +61,8 @@ select {
   color: black; /* Ensure text is visible */
   border: none;
   outline: none;
+}
+
+.episodes_entry {
+  margin-bottom: 5px;
 }

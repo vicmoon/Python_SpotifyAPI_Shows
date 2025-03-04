@@ -27,8 +27,13 @@
       <div class="podcast-item" data-market="{{ podcast.market }}">
         <ul>
           <li>
-            🎤 {{ podcast.name }}:
-            <a href="{{ podcast.url }}" target="_blank">On Spotify</a>
+            ➡️ {{ podcast.name }}:
+            <a href="{{ podcast.url }}" target="_blank"> Spotify</a>
+            <a
+              href="{{ url_for('get_episodes', show_id=podcast.id, query=request.args.get('query')) }}"
+            >
+              Episodes
+            </a>
           </li>
         </ul>
       </div>

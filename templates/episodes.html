@@ -9,14 +9,27 @@
     />
     <title>Podcast Episodes</title>
   </head>
-  <body>
+  <body class="episodes_body">
     <h1>Episodes</h1>
-    <ul>
+    <ul class="episodes">
       {% for episode in episodes %}
-      <li>
-        <a href="{{ episode.url }}" target="_blank">{{ episode.name }}</a>
+      <li class="episodes_entry">
+        🎤 <a href="{{ episode.url }}" target="_blank">{{ episode.name }}</a>
       </li>
       {% endfor %}
     </ul>
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      {% if page > 1 %}
+      <a href="{{ url_for('get_episodes', show_id=show_id, page=page-1) }}"
+        >⬅️ Previous</a
+      >
+      {% endif %} {% if has_next_page %}
+      <a href="{{ url_for('get_episodes', show_id=show_id, page=page+1) }}"
+        >Next ➡️</a
+      >
+      {% endif %}
+    </div>
+    <a href="{{ url_for('get_podcasts', query=query) }}">Back ⬅️ </a>
   </body>
 </html>
