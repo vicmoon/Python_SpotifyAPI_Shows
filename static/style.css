@@ -55,14 +55,19 @@ a {
 }
 
 select {
-  padding: 15px;
+  padding: 10px;
   background-color: #efb036;
   border-radius: 40px;
-  color: black; /* Ensure text is visible */
+  color: black;
   border: none;
   outline: none;
 }
 
 .episodes_entry {
   margin-bottom: 5px;
+}
+
+.filter-section {
+  margin-top: -20px;
+  font-size: 18px;
 }

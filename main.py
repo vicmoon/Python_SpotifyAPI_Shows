@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 # import my_creds 
 import os
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 CLIENT_ID = os.getenv("CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+
 EPISODES_PER_PAGE = 15
 
 # CLIENT_ID = my_creds.CLIENT_ID

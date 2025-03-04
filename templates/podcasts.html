@@ -16,7 +16,7 @@
       <div class="filter-section">
         <h3>Filter by language:</h3>
         <select id="marketFilter" onchange="filterPodcasts()">
-          <option value="all">All Markets</option>
+          <option value="all">All</option>
           {% for market in markets %}
           <option value="{{ market }}">{{ market }}</option>
           {% endfor %}
@@ -28,7 +28,7 @@
         <ul>
           <li>
             ➡️ {{ podcast.name }}:
-            <a href="{{ podcast.url }}" target="_blank"> Spotify</a>
+            <a href="{{ podcast.url }}" target="_blank"> Spotify / </a>
             <a
               href="{{ url_for('get_episodes', show_id=podcast.id, query=request.args.get('query')) }}"
             >
